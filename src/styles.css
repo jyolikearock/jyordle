@@ -1,0 +1,38 @@
+/* Add application styles & imports to this file! */
+
+/* Override background color to dark gray */
+body {
+  background: #282828 !important;
+}
+
+.container {
+  min-width: 400px;
+  max-width: 400px;
+}
+
+.grid-table > tr > td {
+  height: 60px;
+  width: 20%;
+}
+
+.table-fixed {
+  table-layout: fixed;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0.5em;
+}
+
+.mt-10 {
+  margin-top: 10em;
+}
+
+.bg-warning {
+  background-color: #cba947 !important;
+}
+
+footer {
+  bottom: 0;
+  height: 100px;
+}

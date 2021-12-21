@@ -1,0 +1,142 @@
+<div class="container mt-5">
+  <!-- Main game -->
+  <div class="card mt-5 bg-dark">
+    <div class="card-header h2 text-center text-light">JYORDLE</div>
+    <div class="card-body">
+      <table class="table grid-table mb-0">
+        <tr *ngFor="let guess of guesses; let i = index">
+          <td
+            *ngFor="let letter of guess.letters; let j = index"
+            class="text-center border-secondary"
+            [ngClass]="{
+              border: !guess.results[j],
+              'border-3': guessCount === i && guess.index === j,
+              'bg-success': guess.results[j] === 3,
+              'bg-warning': guess.results[j] === 2,
+              'bg-secondary': guess.results[j] === 1
+            }"
+          >
+            <span class="text-light h1">{{ letter }}</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Buttons -->
+    <div class="card-footer">
+      <div class="row mt-1 mb-1">
+        <div class="col-6">
+          <div class="d-grid col-11 ms-3">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              (click)="lose()"
+              [disabled]="showResult"
+            >
+              Give up
+            </button>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="d-grid col-11 me-3">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              (click)="toggleStats()"
+            >
+              Stats
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results panel -->
+  <div class="card mt-3 bg-dark text-light" *ngIf="showResult">
+    <div class="card-header h4 text-center">{{ resultMessage }}</div>
+    <div class="card-body">
+      <h5 class="card-title text-center mb-4" *ngIf="!win">
+        The word was: {{ answer.toUpperCase() }}
+      </h5>
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-success" type="button" (click)="reset()">
+          New Game (ENTER)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error message panel -->
+  <div class="card mt-3 bg-dark text-light" *ngIf="showError">
+    <div class="card-body">
+      <h5 class="card-title text-center">{{ errorMessage }}</h5>
+    </div>
+  </div>
+
+  <!-- Stats panel -->
+  <div class="card mt-3 bg-dark text-light" *ngIf="showStats">
+    <div class="card-header h4 text-center">Stats</div>
+    <table class="table table-fixed text-light ms-2">
+      <tr>
+        <td>Games played:</td>
+        <td>{{ stats.games }}</td>
+      </tr>
+      <tr>
+        <td>Games won:</td>
+        <td>{{ stats.wins }}</td>
+      </tr>
+      <tr>
+        <td>Win rate:</td>
+        <td>{{ stats.winRate }}</td>
+      </tr>
+      <tr>
+        <td>Average # of guesses:</td>
+        <td>{{ stats.averageGuesses }}</td>
+      </tr>
+      <tr>
+        <td>Current streak:</td>
+        <td>{{ stats.currentStreak }}</td>
+      </tr>
+      <tr>
+        <td>Best streak:</td>
+        <td>{{ stats.bestStreak }}</td>
+      </tr>
+    </table>
+    <div class="card-body">
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-success" type="button" (click)="resetStats()">
+          Reset stats
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Discovered letters -->
+  <div class="card mt-3 bg-dark text-light">
+    <div class="card-header h4 text-center">Discovered Letters</div>
+    <div class="card-body">
+      <table class="table grid-table mb-0">
+        <tr *ngFor="let row of letterStatesAsGrid">
+          <td
+            *ngFor="let letterState of row"
+            class="text-center border-secondary"
+            [ngClass]="{
+              border: letterState['state'] === 0,
+              'bg-success': letterState['state'] === 3,
+              'bg-warning': letterState['state'] === 2,
+              'bg-secondary': letterState['state'] === 1
+            }"
+          >
+            <span class="text-light h1">{{ letterState['letter'] }}</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <footer class="mt-5 text-center text-light">
+    Poor man's version of
+    <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank">wordle</a>
+  </footer>
+</div>
